@@ -17,6 +17,7 @@ keymap.set("n", "L", "<cmd>bnext<cr>", {desc = "Next open file"})
 -- exit
 keymap.set("n", "<leader>q",vim.cmd.quitall, {desc = "Quit"})
 keymap.set("n", "<C-w>", vim.cmd.quit, {desc = "Close file"})
+keymap.set("n", "<leader>c",vim.cmd.bdelete, {desc = "Quit"})
 
 vim.keymap.set("n", "<leader>wso", ':w<cr>:so<cr>', {desc = "Write and source"})
 
