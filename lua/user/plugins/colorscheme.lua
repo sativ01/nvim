@@ -1,16 +1,15 @@
 return {
-  "folke/tokyonight.nvim",
-  priority = 1000,
-  config = function()
-    local bg = "#011628"
+	"folke/tokyonight.nvim",
+	priority = 1000,
+	config = function()
+		local bg = "#011628"
 
-    -- setup custom theme colors
-    require("tokyonight").setup({
-      on_colors = function(colors)
-        colors.bg = bg
-      end
-    })
-
+		-- setup custom theme colors
+		require("tokyonight").setup({
+			on_colors = function(colors)
+				colors.bg = bg
+			end,
+		})
     vim.cmd("colorscheme tokyonight")
-  end
+	end,
 }

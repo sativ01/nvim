@@ -9,12 +9,13 @@ opt.number = true
 opt.tabstop = 2 -- 2 spaces for tabs
 opt.shiftwidth = 2 -- 2 spaces for indent width
 opt.expandtab = true -- expand tab to space
-opt.smartindent = true 
+opt.smartindent = true
+opt.scrolloff = 10 -- 10 lines from the top/bottom when scrolling
 
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
+opt.swapfile = false
+opt.backup = false
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undofile = true
 
 opt.wrap = false
 
@@ -41,11 +42,11 @@ vim.opt.updatetime = 250
 vim.opt.colorcolumn = "90"
 
 -- Highlight on yank
-local highlightGroup = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
- vim.api.nvim_create_autocmd('TextYankPost',{
-    callback = function ()
-       vim.highlight.on_yank()
-    end,
-    group = highlightGroup,
-    pattern = '*',
+local highlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlightGroup,
+	pattern = "*",
 })

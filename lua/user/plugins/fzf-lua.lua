@@ -35,5 +35,8 @@ return {
 		vim.keymap.set("n", "gv", function()
 			fzf.lsp_definitions({ jump_to_single_result = true, jump_to_single_result_action = fzf.actions.file_vsplit })
 		end, { desc = "Go to definition in split" })
+		vim.keymap.set("n", "gm", function()
+			fzf.git_status()
+		end, { desc = "List git modified files" })
 	end,
 }

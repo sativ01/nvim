@@ -28,6 +28,7 @@ vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "*", "*zz")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- greatest remap leader
@@ -49,6 +50,9 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 -- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 -- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<leader>u", vim.cmd.nohlsearch, { desc = "Un-hightlight" })
+
+vim.keymap.set({ "n", "i" }, ";;", "<Esc>A;<Esc>")
+vim.keymap.set({ "n", "i" }, ",,", "<Esc>A,<Esc>")
 
 -- redo
 vim.keymap.set("n", "U", vim.cmd.redo)
@@ -73,3 +77,6 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- disable line number
+vim.keymap.set("n", "<leader>rn", ":set relativenumber!<cr>")
