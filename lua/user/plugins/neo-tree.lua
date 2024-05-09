@@ -307,8 +307,8 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<leader>o", ":Neotree reveal<cr>", { desc = "Focus on the current file" })
-		vim.keymap.set("n", "<leader>e", ":Neotree reveal<cr>", { desc = "Show file explorer" })
+		-- vim.keymap.set("n", "<leader>o", ":Neotree reveal toggle<cr>", { desc = "Focus on the current file" })
+		vim.keymap.set("n", "<leader>e", ":Neotree reveal toggle float<cr>", { desc = "Show file explorer" })
 		vim.keymap.set("n", "<leader>of", ":Neotree buffers focus float<cr>", { desc = "Show opened files" })
 		vim.keymap.set("n", "<leader>om", ":Neotree git_status focus float<cr>", { desc = "Show git changed files" })
 		-- vim.cmd([[nnoremap <leader>o :Neotree reveal<cr>]])
