@@ -65,12 +65,14 @@ vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 -- handy dandy
 vim.keymap.set("n", "Y", "Y")
 vim.keymap.set("n", "|", ":vs<cr>")
-vim.keymap.set("n", "cw", "ciw")
-vim.keymap.set("n", "yw", "yiw")
-vim.keymap.set("n", "dw", "diw")
-vim.keymap.set("n", "cW", "ciW")
-vim.keymap.set("n", "yW", "yiW")
-vim.keymap.set("n", "dW", "diW")
+
+-- set default selection to inner
+vim.keymap.set("o", "w", "iw", { remap = false })
+vim.keymap.set("o", "'", "i'", { remap = false })
+vim.keymap.set("o", '"', 'i"', { remap = false })
+vim.keymap.set("o", "(", "i(", { remap = false })
+vim.keymap.set("o", "[", "i[", { remap = false })
+vim.keymap.set("o", "{", "i{", { remap = false })
 
 -- window navigation
 vim.keymap.set("n", "<C-h>", "<C-w>h")
