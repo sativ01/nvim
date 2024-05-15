@@ -6,6 +6,7 @@ return {
 
 		-- setup custom theme colors
 		require("tokyonight").setup({
+      transparent = true,
 			on_colors = function(colors)
 				colors.bg = bg
 			end,
