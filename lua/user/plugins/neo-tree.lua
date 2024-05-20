@@ -1,3 +1,43 @@
+local function copy_path(state)
+	-- NeoTree is based on [NuiTree](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree)
+	-- The node is based on [NuiNode](https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/tree#nuitreenode)
+	local node = state.tree:get_node()
+	local filepath = node:get_id()
+	local filename = node.name
+	local modify = vim.fn.fnamemodify
+
+	local results = {
+		filepath,
+		modify(filepath, ":."),
+		modify(filepath, ":~"),
+		filename,
+		modify(filename, ":r"),
+		modify(filename, ":e"),
+	}
+
+	vim.ui.select({
+		"1. Absolute path: " .. results[1],
+		"2. Path relative to CWD: " .. results[2],
+		"3. Path relative to HOME: " .. results[3],
+		"4. Filename: " .. results[4],
+		"5. Filename without extension: " .. results[5],
+		"6. Extension of the filename: " .. results[6],
+	}, { prompt = "Choose to copy to clipboard:" }, function(choice)
+		if choice then
+			local i = tonumber(choice:sub(1, 1))
+			if i then
+				local result = results[i]
+				vim.fn.setreg("@", result) -- set default register
+				vim.notify("Copied: " .. result)
+			else
+				vim.notify("Invalid selection")
+			end
+		else
+			vim.notify("Selection cancelled")
+		end
+	end)
+end
+
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
@@ -240,7 +280,8 @@ return {
 						["<c-x>"] = "clear_filter",
 						["[g"] = "prev_git_modified",
 						["]g"] = "next_git_modified",
-						["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+						["o"] = "system_open",
+						["Y"] = copy_path,
 						["oc"] = { "order_by_created", nowait = false },
 						["od"] = { "order_by_diagnostics", nowait = false },
 						["og"] = { "order_by_git_status", nowait = false },
@@ -259,7 +300,26 @@ return {
 					},
 				},
 
-				commands = {}, -- Add a custom command or override a global one using the same function name
+				commands = {
+					system_open = function(state)
+						local node = state.tree:get_node()
+						local path = node:get_id()
+						-- macOs: open file in default application in the background.
+						vim.fn.jobstart({ "xdg-open", "-g", path }, { detach = true })
+						-- Linux: open file in default application
+						vim.fn.jobstart({ "xdg-open", path }, { detach = true })
+
+						-- Windows: Without removing the file from the path, it opens in code.exe instead of explorer.exe
+						local p
+						local lastSlashIndex = path:match("^.+()\\[^\\]*$") -- Match the last slash and everything before it
+						if lastSlashIndex then
+							p = path:sub(1, lastSlashIndex - 1) -- Extract substring before the last slash
+						else
+							p = path -- If no slash found, return original path
+						end
+						vim.cmd("silent !start explorer " .. p)
+					end,
+				}, -- Add a custom command or override a global one using the same function name
 			},
 			buffers = {
 				follow_current_file = {
