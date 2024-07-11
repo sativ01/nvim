@@ -13,6 +13,7 @@ keymap.set("n", "<leader>x", "<cmd>close<cr>", { desc = "Close current split" })
 -- buffers
 keymap.set("n", "H", "<cmd>bprev<cr>", { desc = "Prev open file" })
 keymap.set("n", "L", "<cmd>bnext<cr>", { desc = "Next open file" })
+keymap.set("n", "<C-x>", "<cmd>w | %bd | e#<cr>", { desc = "Next open file" })
 
 -- exit
 keymap.set("n", "<leader>q", vim.cmd.quitall, { desc = "Quit" })
@@ -21,8 +22,8 @@ keymap.set("n", "<leader>c", ":bp<bar>sp<bar>bn<bar>bd<CR>", { desc = "Quit" })
 
 vim.keymap.set("n", "<leader>wso", ":w<cr>:so<cr>", { desc = "Write and source" })
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Line in Visual mode" })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Line in Visual mode" })
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Line in Visual mode" })
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Line in Visual mode" })
 
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")

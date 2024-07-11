@@ -6,11 +6,11 @@ return {
 
 		-- setup custom theme colors
 		require("tokyonight").setup({
-      transparent = true,
+			transparent = true,
 			on_colors = function(colors)
 				colors.bg = bg
 			end,
 		})
-    vim.cmd("colorscheme tokyonight")
+		-- vim.cmd("colorscheme tokyonight")
 	end,
 }

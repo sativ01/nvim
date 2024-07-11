@@ -2,6 +2,8 @@ vim.cmd("let g:netrw_liststyle = 3")
 
 local opt = vim.opt
 
+opt.cmdheight = 0 -- hide bottom command line when not used
+
 opt.relativenumber = true
 opt.number = true
 

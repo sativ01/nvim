@@ -48,11 +48,10 @@ return {
 				end,
 			}),
 			sources = cmp.config.sources({
-				{ name = "copilot", group_index = 2, max_item_count = 2 },
-				{ name = "nvim_lsp", group_index = 2, max_item_count = 5 },
-				{ name = "path", max_item_count = 3 },
-			}, {
-				{ name = "buffer", max_item_count = 4 },
+				{ name = "nvim_lsp", max_item_count = 3 },
+				{ name = "copilot", max_item_count = 2 },
+				{ name = "buffer", max_item_count = 2 },
+				{ name = "path", max_item_count = 2 },
 			}),
 			formatting = {
 				format = lspkind.cmp_format({
