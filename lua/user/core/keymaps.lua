@@ -61,6 +61,12 @@ vim.keymap.set("n", "U", vim.cmd.redo)
 -- diagnostics navigation
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+vim.keymap.set("n", "[e", function()
+	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+end)
+vim.keymap.set("n", "]e", function()
+	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+end)
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 
 -- handy dandy
@@ -80,6 +86,9 @@ vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- Open Outline
+vim.keymap.set("n", "<leader>o", ":Outline<CR>", { desc = "Toggle Outline" })
 
 -- disable line number
 vim.keymap.set("n", "<leader>rn", ":set relativenumber!<cr>")

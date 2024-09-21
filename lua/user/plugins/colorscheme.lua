@@ -11,6 +11,6 @@ return {
 				colors.bg = bg
 			end,
 		})
-		-- vim.cmd("colorscheme tokyonight")
+		vim.cmd("colorscheme tokyonight")
 	end,
 }
