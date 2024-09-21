@@ -40,6 +40,8 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true -- split vertical window to the right
 opt.splitbelow = true -- split horizontal to the bottom
 
+opt.spell = true -- turn on spell check
+
 vim.opt.updatetime = 250
 vim.opt.colorcolumn = "90"
 
