@@ -82,14 +82,6 @@ return {
 						vim.cmd("Neotree close")
 					end,
 				},
-				{
-					event = "neo_tree_popup_input_ready",
-					---@param args { bufnr: integer, winid: integer }
-					handler = function(args)
-						vim.cmd("stopinsert")
-						vim.keymap.set("i", "<esc>", vim.cmd.stopinsert, { noremap = true, buffer = args.bufnr })
-					end,
-				},
 			},
 			close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
 			popup_border_style = "rounded",

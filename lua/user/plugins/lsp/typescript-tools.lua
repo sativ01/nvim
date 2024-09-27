@@ -5,7 +5,6 @@ return {
 	config = function()
 		require("typescript-tools").setup({
 			settings = {
-				expose_as_code_action = { "all" },
 				separate_diagnostic_server = true,
 				publish_diagnostic_on = "insert_leave",
 				tsserver_max_memory = 8096,

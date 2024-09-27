@@ -39,7 +39,7 @@ return {
 		vim.keymap.set("n", "<leader>set", ":FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
 		vim.keymap.set("v", "<leader>se", ":FzfLua grep_visual<cr>", { desc = "Search selcted text" })
 		vim.keymap.set("n", "<leader>sv", ":FzfLua lsp_document_symbols<cr>", { desc = "Search variables" })
-		vim.keymap.set("v", "<leader>sc", ":FzfLua spell_suggest<cr>", { desc = "Spell suggest" })
+		vim.keymap.set({ "v", "n" }, "<leader>sc", ":FzfLua spell_suggest<cr>", { desc = "Spell suggest" })
 
 		vim.keymap.set("n", "gD", function()
 			fzf.lsp_declarations()
