@@ -16,6 +16,17 @@ return {
 			strategies = {
 				chat = {
 					adapter = "copilot",
+					slash_commands = {
+						["help"] = {
+							callback = "strategies.chat.slash_commands.help",
+							description = "Insert content from help tags",
+							opts = {
+								contains_code = false,
+								max_lines = 128, -- Maximum amount of lines to of the help file to send (NOTE: each vimdoc line is typically 10 tokens)
+								provider = "fzf_lua", -- telescope|mini_pick|fzf_lua
+							},
+						},
+					},
 				},
 				inline = {
 					adapter = false,

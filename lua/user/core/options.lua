@@ -24,6 +24,7 @@ opt.wrap = false
 -- search settings
 opt.ignorecase = true
 opt.smartcase = true
+opt.equalalways = true
 
 opt.cursorline = true
 

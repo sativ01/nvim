@@ -1,9 +1,8 @@
--- vim.api.nvim_create_autocmd({ "VimLeave" }, {
--- 	desc = "Close all side panels",
--- 	callback = function(args)
--- 		vim.cmd("OutlineClose")
--- 	end,
--- })
+-- Automatically resize windows when opening or closing a window
+vim.api.nvim_create_autocmd({ "VimResized", "WinEnter", "WinClosed" }, {
+	pattern = "*",
+	command = "wincmd =",
+})
 
 vim.api.nvim_create_autocmd("User", {
 	pattern = "PersistedSavePre",
