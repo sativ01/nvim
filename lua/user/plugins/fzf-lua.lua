@@ -1,3 +1,15 @@
+local img_previewer ---@type string[]?
+for _, v in ipairs({
+	{ cmd = "ueberzug", args = {} },
+	{ cmd = "chafa", args = { "{file}", "--format=symbols" } },
+	{ cmd = "viu", args = { "-b" } },
+}) do
+	if vim.fn.executable(v.cmd) == 1 then
+		img_previewer = vim.list_extend({ v.cmd }, v.args)
+		break
+	end
+end
+
 return {
 	"ibhagwan/fzf-lua",
 	-- optional for icon support
@@ -17,6 +29,18 @@ return {
 				lsp = {
 					jump_to_single_result = true,
 				},
+				previewers = {
+					builtin = {
+						extensions = {
+							["png"] = img_previewer,
+							["jpg"] = img_previewer,
+							["jpeg"] = img_previewer,
+							["gif"] = img_previewer,
+							["webp"] = img_previewer,
+						},
+						ueberzug_scaler = "fit_contain",
+					},
+				},
 			},
 		})
 		vim.keymap.set("n", "<leader>f", ":FzfLua files<cr>", { desc = "Find file" })
@@ -26,18 +50,21 @@ return {
 			fzf.oldfiles({ cwd = vim.fn.getcwd() })
 		end, { desc = "Search recent" })
 
-		vim.keymap.set("n", "<leader>ss", function()
+		vim.keymap.set({ "n", "v" }, "<leader>ss", function()
 			fzf.live_grep({ file_ignore_patterns = { "%.spec.", "%.test." } })
 		end, { desc = "Search word without tests" })
 
-		vim.keymap.set("n", "<leader>sst", ":FzfLua live_grep<cr>", { desc = "Search word with tests" })
+		vim.keymap.set({ "n", "v" }, "<leader>sl", function()
+			fzf.live_grep({ cwd = vim.fn.expand("%:p:h"), file_ignore_patterns = { "%.spec.", "%.test." } })
+		end, { desc = "Search Local No tests" })
 
-		vim.keymap.set("n", "<leader>se", function()
+		vim.keymap.set({ "n", "v" }, "<leader>sS", ":FzfLua live_grep<cr>", { desc = "Search word with tests" })
+
+		vim.keymap.set({ "n", "v" }, "<leader>se", function()
 			fzf.grep_cword({ file_ignore_patterns = { "%.spec.", "%.test." } })
 		end, { desc = "Search word under cursor" })
 
-		vim.keymap.set("n", "<leader>set", ":FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
-		vim.keymap.set("v", "<leader>se", ":FzfLua grep_visual<cr>", { desc = "Search selcted text" })
+		vim.keymap.set({ "n", "v" }, "<leader>sE", ":FzfLua grep_cword<cr>", { desc = "Search word under cursor" })
 		vim.keymap.set("n", "<leader>sv", ":FzfLua lsp_document_symbols<cr>", { desc = "Search variables" })
 		vim.keymap.set({ "v", "n" }, "<leader>sc", ":FzfLua spell_suggest<cr>", { desc = "Spell suggest" })
 

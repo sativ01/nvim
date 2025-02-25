@@ -25,6 +25,7 @@ return {
 		})
 
 		mason_lspconfig.setup({
+			automatic_installation = true,
 			-- list of servers for mason to install
 			ensure_installed = {
 				-- "tsserver", -- replaced by typescript-tools.nvim
@@ -32,7 +33,7 @@ return {
 				"cssls",
 				-- "tailwindcss",
 				"graphql",
-				"prismals",
+				-- "prismals",
 			},
 		})
 
