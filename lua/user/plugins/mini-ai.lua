@@ -1,7 +1,7 @@
 return {
-	"echasnovski/mini.jump",
+	"echasnovski/mini.ai",
 	event = "VeryLazy",
 	config = function()
-		require("mini.jump").setup()
+		require("mini.ai").setup({})
 	end,
 }
