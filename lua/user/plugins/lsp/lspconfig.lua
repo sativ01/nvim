@@ -2,20 +2,21 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		-- "hrsh7th/cmp-nvim-lsp",
 		"saghen/blink.cmp",
-		-- { "antosha417/nvim-lsp-file-operations", config = true },
-		-- { "folke/neodev.nvim", opts = {} },
+		-- LSP wrapper for vtsls.
+		"yioneko/nvim-vtsls",
 	},
 	config = function()
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
+		local capabilities = vim.lsp.protocol.make_client_capabilities()
+		capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
-		-- import mason_lspconfig plugin
-		local mason_lspconfig = require("mason-lspconfig")
-
-		-- import cmp-nvim-lsp plugin
-		-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
+		function configure_server(server, settings)
+			lspconfig[server].setup(
+				vim.tbl_deep_extend("error", { capabilities = capabilities, silent = true }, settings or {})
+			)
+		end
 
 		local keymap = vim.keymap -- for conciseness
 
@@ -58,7 +59,8 @@ return {
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		-- local capabilities = cmp_nvim_lsp.default_capabilities()
-		local capabilities = require("blink.cmp").get_lsp_capabilities()
+		local capabilities = vim.lsp.protocol.make_client_capabilities()
+		capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
@@ -68,36 +70,70 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
-		mason_lspconfig.setup_handlers({
-			-- default handler for installed servers
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
+		configure_server("eslint", {
+			filetypes = {
+				"graphql",
+				"javascript",
+				"javascriptreact",
+				"typescript",
+				"typescriptreact",
+			},
+			settings = { format = false },
+		})
+		configure_server("jsonls", {
+			settings = {
+				json = {
+					validate = { enable = true },
+				},
+			},
+			-- Lazy-load schemas.
+			on_new_config = function(config)
+				config.settings.json.schemas = config.settings.json.schemas or {}
+				vim.list_extend(config.settings.json.schemas, require("schemastore").json.schemas())
 			end,
-			["graphql"] = function()
-				-- configure graphql language server
-				lspconfig["graphql"].setup({
-					capabilities = capabilities,
-					filetypes = { "graphql", "gql" },
-				})
-			end,
-			["lua_ls"] = function()
-				-- configure lua server (with special settings)
-				lspconfig["lua_ls"].setup({
-					capabilities = capabilities,
-					settings = {
-						Lua = {
-							-- make the language server recognize "vim" global
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
+		})
+		-- Use the same settings for JS and TS.
+		local lang_settings = {
+			suggest = { completeFunctionCalls = true },
+			inlayHints = {
+				functionLikeReturnTypes = { enabled = true },
+				parameterNames = { enabled = "literals" },
+				variableTypes = { enabled = true },
+			},
+		}
+		configure_server("vtsls", {
+			settings = {
+				typescript = lang_settings,
+				javascript = lang_settings,
+				vtsls = {
+					-- Automatically use workspace version of TypeScript lib on startup.
+					autoUseWorkspaceTsdk = true,
+					experimental = {
+						-- Inlay hint truncation.
+						maxInlayHintLength = 30,
+						-- For completion performance.
+						completion = {
+							enableServerSideFuzzyMatch = true,
 						},
 					},
-				})
+				},
+			},
+		})
+
+		configure_server("yamlls", {
+			settings = {
+				yaml = {
+					-- Using the schemastore plugin instead.
+					schemastore = {
+						enable = false,
+						url = "",
+					},
+				},
+			},
+			-- Lazy-load schemas.
+			on_new_config = function(config)
+				config.settings.yaml.schemas = config.settings.yaml.schemas or {}
+				vim.list_extend(config.settings.yaml.schemas, require("schemastore").yaml.schemas())
 			end,
 		})
 	end,

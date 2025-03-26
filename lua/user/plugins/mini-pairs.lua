@@ -5,8 +5,8 @@ return {
 		mappings = {
 			["`"] = { action = "closeopen", pair = "``", neigh_pattern = "[^\\`].", register = { cr = false } },
 			["("] = { action = "open", pair = "()", neigh_pattern = "[^\\(]." },
-			["["] = { action = "open", pair = "()", neigh_pattern = "[^\\[]." },
-			["{"] = { action = "open", pair = "()", neigh_pattern = "[^\\{]." },
+			["["] = { action = "open", pair = "[]", neigh_pattern = "[^\\[]." },
+			["{"] = { action = "open", pair = "{}", neigh_pattern = "[^\\{]." },
 		},
 	},
 	keys = {

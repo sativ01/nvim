@@ -28,12 +28,11 @@ return {
 			automatic_installation = true,
 			-- list of servers for mason to install
 			ensure_installed = {
-				-- "tsserver", -- replaced by typescript-tools.nvim
+				"vtsls",
 				"html",
 				"cssls",
 				-- "tailwindcss",
 				"graphql",
-				-- "prismals",
 			},
 		})
 
@@ -41,7 +40,7 @@ return {
 			ensure_installed = {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
-				"eslint_d",
+				"eslint-lsp",
 			},
 		})
 	end,

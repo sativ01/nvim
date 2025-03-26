@@ -21,7 +21,7 @@ return {
 		-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 		-- See the full "keymap" documentation for information on defining your own keymap.
 		keymap = {
-			preset = "enter",
+			preset = "super-tab",
 			["<M-space>"] = { "show", "show_documentation", "hide_documentation" },
 			-- ["<M-space>"] = {
 			-- 	function(cmp)
@@ -67,6 +67,7 @@ return {
 		sources = {
 			default = { "buffer", "lsp", "path", "snippets" },
 		},
+		fuzzy = { implementation = "prefer_rust_with_warning" },
 	},
 	opts_extend = { "sources.default" },
 }
